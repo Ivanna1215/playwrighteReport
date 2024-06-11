@@ -1,5 +1,4 @@
 import { defineConfig, devices } from '@playwright/test';
-import { expect } from '@playwright/test';
 
 export default defineConfig({
   testDir: './tests',
@@ -12,17 +11,7 @@ export default defineConfig({
   fullyParallel: true,
   workers: process.env.CI ? 1 : undefined,
   reporter: process.env.CI ? 
-  [['json', {  outputFile: './test-results/report.json' }], ['list'],
-  ['allure-playwright',{
-      detail: true,
-        suiteTitle: true,
-        outputFolder: "allure-results",
-        environmentInfo: {
-         url: 'https://playwright.dev/',
-        }
-      }  
-    ],
-    ] : 
+  [['json', {  outputFile: './test-results/report.json' }]] : 
     [['json', {  outputFile: './test-results/report.json' }],
     ['allure-playwright',{
         detail: true,
@@ -39,12 +28,9 @@ export default defineConfig({
         screenshot: 'on',
         headless: true
       },
+
   /* Configure projects for major browsers */
   projects: [
-    {
-      name:"tests",
-      testMatch:"**.spec.ts"
-    },
     {
       name: 'Google Chrome',
       use: { ...devices['Desktop Chrome']},
